@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use WPManager\Commands\BackupCommand;
+use WPManager\Commands\SecurityCommand;
+use WPManager\Commands\UpdateCommand;
+use WPManager\Commands\PluginCommand;
+use WPManager\Commands\ThemeCommand;
+use WPManager\Commands\SetupCommand;
+use WPManager\Commands\PostCommand;
+use WPManager\Commands\PageCommand;
+
+$application = new Application('WordPress Manager', '1.0.0');
+
+// Registrar comandos
+$application->add(new BackupCommand());
+$application->add(new SecurityCommand());
+$application->add(new UpdateCommand());
+$application->add(new PluginCommand());
+$application->add(new ThemeCommand());
+$application->add(new SetupCommand());
+$application->add(new PostCommand());
+$application->add(new PageCommand());
+
+$application->run(); 

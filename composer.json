@@ -1,0 +1,17 @@
+{
+    "name": "wp-management-system",
+    "description": "Sistema de gerenciamento completo do WordPress",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "wp-cli/wp-cli": "^2.8",
+        "symfony/console": "^5.4",
+        "guzzlehttp/guzzle": "^7.0",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "WPManager\\": "src/"
+        }
+    }
+} 

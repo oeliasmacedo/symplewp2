@@ -1,0 +1,88 @@
+# Arquivos de ambiente
+.env
+.env.*
+!.env.example
+
+# Dependências
+/vendor
+/node_modules
+
+# Arquivos de log
+/storage/logs/*
+!/storage/logs/.gitkeep
+/storage/app/*
+!/storage/app/.gitkeep
+/storage/framework/*
+!/storage/framework/.gitkeep
+
+# Arquivos de cache
+.phpunit.result.cache
+.php_cs.cache
+.php-cs-fixer.cache
+
+# Arquivos de IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de backup
+*.bak
+*.swp
+*.swo
+*~
+
+# Arquivos de build
+/public/build/
+/public/hot
+/public/storage
+/public/css
+/public/js
+/public/mix-manifest.json
+
+# Arquivos de teste
+/coverage
+.phpunit.cache
+
+# Arquivos temporários
+/tmp
+/temp
+
+# Arquivos de configuração local
+docker-compose.override.yml
+phpunit.xml
+.php-cs-fixer.php
+
+# Arquivos de SSL
+*.pem
+*.key
+*.crt
+*.csr
+*.srl
+
+# Arquivos de banco de dados
+*.sqlite
+*.sqlite3
+*.db
+
+# Arquivos de WordPress
+/wordpress
+/wp-content
+/wp-config.php
+
+# Arquivos de backup
+/backups
+*.sql
+*.zip
+*.gz
+*.tar
+*.rar
+
+# Outros
+.htaccess
+.well-known/ 

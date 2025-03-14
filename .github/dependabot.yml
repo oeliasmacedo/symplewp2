@@ -1,0 +1,87 @@
+version: 2
+updates:
+  # Atualizações do Composer
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 10
+    target-branch: "main"
+    versioning-strategy: "auto"
+    labels:
+      - "dependencies"
+      - "php"
+    reviewers:
+      - "seu-usuario-github"
+    assignees:
+      - "seu-usuario-github"
+    commit-message:
+      prefix: "composer"
+      include: "scope"
+
+  # Atualizações do npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 10
+    target-branch: "main"
+    versioning-strategy: "auto"
+    labels:
+      - "dependencies"
+      - "javascript"
+    reviewers:
+      - "seu-usuario-github"
+    assignees:
+      - "seu-usuario-github"
+    commit-message:
+      prefix: "npm"
+      include: "scope"
+
+  # Atualizações do Docker
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 10
+    target-branch: "main"
+    labels:
+      - "dependencies"
+      - "docker"
+    reviewers:
+      - "seu-usuario-github"
+    assignees:
+      - "seu-usuario-github"
+    commit-message:
+      prefix: "docker"
+      include: "scope"
+
+  # Atualizações do GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 10
+    target-branch: "main"
+    labels:
+      - "dependencies"
+      - "github_actions"
+    reviewers:
+      - "seu-usuario-github"
+    assignees:
+      - "seu-usuario-github"
+    commit-message:
+      prefix: "github-actions"
+      include: "scope" 

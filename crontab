@@ -1,0 +1,35 @@
+# Backup diário às 2h da manhã
+0 2 * * * www-data /usr/bin/php /var/www/wp-manager/artisan backup:run >> /var/log/wp-manager/backup.log 2>&1
+
+# Limpeza de backups antigos às 3h da manhã
+0 3 * * * www-data /usr/bin/php /var/www/wp-manager/artisan backup:clean >> /var/log/wp-manager/backup.log 2>&1
+
+# Verificação de atualizações do WordPress às 4h da manhã
+0 4 * * * www-data /usr/bin/php /var/www/wp-manager/artisan wordpress:check-updates >> /var/log/wp-manager/updates.log 2>&1
+
+# Verificação de atualizações de plugins às 4h30 da manhã
+30 4 * * * www-data /usr/bin/php /var/www/wp-manager/artisan plugins:check-updates >> /var/log/wp-manager/updates.log 2>&1
+
+# Verificação de atualizações de temas às 5h da manhã
+0 5 * * * www-data /usr/bin/php /var/www/wp-manager/artisan themes:check-updates >> /var/log/wp-manager/updates.log 2>&1
+
+# Otimização do banco de dados às 1h da manhã
+0 1 * * * www-data /usr/bin/php /var/www/wp-manager/artisan db:optimize >> /var/log/wp-manager/database.log 2>&1
+
+# Limpeza de logs antigos às 0h
+0 0 * * * www-data /usr/bin/find /var/log/wp-manager -type f -name "*.log" -mtime +30 -delete
+
+# Verificação de segurança diária às 6h da manhã
+0 6 * * * www-data /usr/bin/php /var/www/wp-manager/artisan security:check >> /var/log/wp-manager/security.log 2>&1
+
+# Monitoramento de recursos a cada 5 minutos
+*/5 * * * * www-data /usr/bin/php /var/www/wp-manager/artisan monitor:resources >> /var/log/wp-manager/monitor.log 2>&1
+
+# Limpeza de cache a cada hora
+0 * * * * www-data /usr/bin/php /var/www/wp-manager/artisan cache:clear >> /var/log/wp-manager/cache.log 2>&1
+
+# Verificação de saúde do sistema a cada 15 minutos
+*/15 * * * * www-data /usr/bin/php /var/www/wp-manager/artisan health:check >> /var/log/wp-manager/health.log 2>&1
+
+# Rotação de logs diária às 23h59
+59 23 * * * www-data /usr/sbin/logrotate /etc/logrotate.d/wp-manager.conf 

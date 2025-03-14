@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wp-manager-app
+    restart: unless-stopped
+    working_dir: /var/www/wp-manager
+    volumes:
+      - ./:/var/www/wp-manager
+      - ./storage/logs:/var/log/wp-manager
+    networks:
+      - wp-manager-network
+    depends_on:
+      - redis
+      - mysql
+
+  nginx:
+    image: nginx:alpine
+    container_name: wp-manager-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/wp-manager
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./storage/logs/nginx:/var/log/nginx
+      - ./storage/ssl:/etc/nginx/ssl
+    networks:
+      - wp-manager-network
+    depends_on:
+      - app
+
+  mysql:
+    image: mysql:8.0
+    container_name: wp-manager-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis:alpine
+    container_name: wp-manager-redis
+    restart: unless-stopped
+    command: redis-server /usr/local/etc/redis/redis.conf --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./storage/redis:/data
+    networks:
+      - wp-manager-network
+    ports:
+      - "6379:6379"
+
+  supervisor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wp-manager-supervisor
+    restart: unless-stopped
+    command: supervisord -c /etc/supervisor/conf.d/supervisor.conf
+    volumes:
+      - ./:/var/www/wp-manager
+      - ./supervisor.conf:/etc/supervisor/conf.d/supervisor.conf
+      - ./storage/logs/supervisor:/var/log/supervisor
+    networks:
+      - wp-manager-network
+    depends_on:
+      - app
+      - redis
+      - mysql
+
+  wordpress:
+    image: wordpress:latest
+    container_name: wp-manager-wordpress
+    depends_on:
+      - mysql
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - wordpress_data:/var/www/html
+    ports:
+      - "8080:80"
+
+networks:
+  wp-manager-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  redis_data:
+  wordpress_data: 

@@ -1,0 +1,37 @@
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - vendor/*
+        - storage/*
+        - bootstrap/*
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        - '#Method [a-zA-Z0-9\\_]+::[a-zA-Z0-9\\_]+\(\) has no return type specified#'
+        - '#Property [a-zA-Z0-9\\_]+::\$[a-zA-Z0-9\\_]+ has no type specified#'
+    bootstrapFiles:
+        - vendor/autoload.php
+    tmpDir: build/phpstan
+    parallel:
+        maximumNumberOfProcesses: 4
+        processTimeout: 300.0
+    symfony:
+        container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+    doctrine:
+        objectManagerLoader: tests/object-manager.php
+    scanDirectories:
+        - src
+        - tests
+    scanFiles:
+        - vendor/autoload.php
+    earlyTerminatingMethodCalls:
+        App\Http\Controllers\Controller:
+            - abort
+            - redirect
+            - response
+    dynamicConstantNames:
+        - APP_ENV
+        - APP_DEBUG 
