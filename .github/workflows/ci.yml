@@ -105,7 +105,7 @@ jobs:
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
     - name: Security Check
-      uses: symfonycorp/security-checker-action@v2
+      uses: symfonycorp/security-checker-action@v5
 
   build:
     name: Build Docker Image
